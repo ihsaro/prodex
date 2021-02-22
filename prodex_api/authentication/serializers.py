@@ -13,5 +13,18 @@ class RegisterSerializer(ModelSerializer):
             }
         }
 
+    def validate(self, data):
+        self.__validate_key(data, 'first_name')
+        self.__validate_key(data, 'last_name')
+        self.__validate_key(data, 'email')
+        return data
+
     def create(self, validated_data):
         return ProdexUser.objects.create_user(**validated_data)
+
+    def __validate_key(self, data, key):
+        if key not in data:
+            raise KeyError(f'{key} not present in dictionary!')
+        else:
+            if data[key] == '':
+                raise ValidationError(f'{key} has an empty value!')

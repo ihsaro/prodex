@@ -25,7 +25,7 @@ SECRET_KEY = 'q2@2+ojr@9qg_xgmukgg_%)!i1@^7%6l5g=tys-v-u^bxi+696'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'localhost:3000']
 
 
 # Application definition
@@ -48,6 +48,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 3rd Party Middleware
+    'corsheaders.middleware.CorsMiddleware',
+
     # In built Django Middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,9 +59,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # 3rd Party Middleware
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'prodex_api.urls'
@@ -133,6 +133,14 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'authentication.ProdexUser'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+
+CORS_ALLOW_CREDENTIALS = True
