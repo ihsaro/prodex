@@ -15,6 +15,7 @@ def register(*, request: Request) -> Response:
     serializer = RegisterSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        return Response(success_response())
 
 
 def login(*, request: Request) -> Response:
